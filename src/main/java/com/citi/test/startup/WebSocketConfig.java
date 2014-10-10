@@ -1,4 +1,4 @@
-package com.citi.test.controller;
+package com.citi.test.startup;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

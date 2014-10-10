@@ -23,7 +23,7 @@ public class AppInitializer implements WebApplicationInitializer {
 
     private AnnotationConfigWebApplicationContext getContext() {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.setConfigLocation("com.citi.test.startup.config");
+        context.setConfigLocation("com.citi.test.startup");
         return context;
     }
 
