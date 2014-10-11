@@ -1,11 +1,15 @@
 package com.citi.test.controller;
 
-public class Greeting {
+public class Message {
 
 	private String content;
 
-	public Greeting(String content) {
+	public Message(String content) {
 		this.content = content;
+	}
+	
+	public Message() { 
+		
 	}
 
 	public String getContent() {

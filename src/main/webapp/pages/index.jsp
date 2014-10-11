@@ -8,21 +8,33 @@
         var stompClient = null;
         
         function setConnected(connected) {
-            document.getElementById('connect').disabled = connected;
+            
+        	document.getElementById('connect').disabled = connected;
             document.getElementById('disconnect').disabled = !connected;
+            
+                      
             document.getElementById('conversationDiv').style.visibility = connected ? 'visible' : 'hidden';
             document.getElementById('response').innerHTML = '';
+            
         }
         
         function connect() {
+      
+        	document.getElementById('div_welcome').style.display = "none";
+            document.getElementById('div_welcome').style.visibility = "hidden";
+        	
             var socket = new SockJS('<%= request.getContextPath() %>/sock/hello');
             stompClient = Stomp.over(socket);            
             stompClient.connect({}, function(frame) {
                 setConnected(true);
+                
                 console.log('Connected: ' + frame);
                 stompClient.subscribe('/topic/greetings', function(greeting){
                     showGreeting(JSON.parse(greeting.body).content);
                 });
+                var name = document.getElementById('name').value;
+                stompClient.send("/app/hello", {}, JSON.stringify({ 'name': name }));
+                
             });
         }
         
@@ -32,9 +44,9 @@
             console.log("Disconnected");
         }
         
-        function sendName() {
-            var name = document.getElementById('name').value;
-            stompClient.send("/app/hello", {}, JSON.stringify({ 'name': name }));
+        function sendMessage() {
+            var message = document.getElementById('message').value;
+            stompClient.send("/app/message", {}, JSON.stringify({ 'content': message }));
         }
         
         function showGreeting(message) {
@@ -50,13 +62,14 @@
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being enabled. Please enable
     Javascript and reload this page!</h2></noscript>
 <div>
-    <div>
+    <div id="div_welcome">
+    	<label>Name: </label><input type="text" id="name" />
         <button id="connect" onclick="connect();">Connect</button>
         <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
     </div>
-    <div id="conversationDiv">
-        <label>What is your name?</label><input type="text" id="name" />
-        <button id="sendName" onclick="sendName();">Send</button>
+    <div id="conversationDiv" style='visibility:hidden'>
+        <label>Message: </label><input type="text" id="message" />
+        <button id="sendMessage" onclick="sendMessage();">Send</button>
         <p id="response"></p>
     </div>
 </div>
