@@ -1,4 +1,4 @@
-package com.citi.test.controller;
+package com.citi.test.controller.stomp;
 
 public class Message {
 

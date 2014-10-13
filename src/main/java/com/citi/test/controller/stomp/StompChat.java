@@ -1,11 +1,11 @@
-package com.citi.test.controller;
+package com.citi.test.controller.stomp;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class GreetingController {
+public class StompChat {
 
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
